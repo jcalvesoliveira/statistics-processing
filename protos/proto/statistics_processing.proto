@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package statisticsprocessing;
+
+service StatisticsProcesser {
+  rpc ProcessDocument (ProcessDocumentRequest) returns (ProcessDocumentReply) {}
+}
+
+message ProcessDocumentRequest {
+  bytes content = 1;
+}
+
+message ProcessDocumentReply {
+  bytes summary = 1;
+}

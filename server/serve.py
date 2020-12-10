@@ -6,11 +6,13 @@ from concurrent import futures
 
 import grpc
 
-from logger import module_logger
-from proto.health_pb2_grpc import add_HealthServicer_to_server
-from servicers.health import HealthServicer
-from proto.system_info_pb2_grpc import add_SystemInfoServicer_to_server
-from servicers.system_info import SystemInfoServicer
+from server.core.logger import module_logger
+from server.proto.health_pb2_grpc import add_HealthServicer_to_server
+from server.servicers.health import HealthServicer
+from server.proto.system_info_pb2_grpc import add_SystemInfoServicer_to_server
+from server.servicers.system_info import SystemInfoServicer
+from server.servicers.statistics_calc import Calculator
+from server.proto.statistics_processing_pb2_grpc import add_StatisticsProcesserServicer_to_server
 
 GRPC_MAX_WORKERS = 10
 GRPC_INSECURE_PORT = 50050
@@ -65,6 +67,8 @@ class Server(object):
         add_HealthServicer_to_server(HealthServicer(), self.server)
         logger.debug("Adding SystemInfoServicer")
         add_SystemInfoServicer_to_server(SystemInfoServicer(), self.server)
+        logger.debug("Adding StatisticsServicer")
+        add_StatisticsProcesserServicer_to_server(Calculator(), self.server)
 
     def setup_insecure_server(self):
         logger.info("Setting up an insecure server.")
@@ -92,9 +96,3 @@ def handle_sigterm(*args):
 
 
 signal.signal(signal.SIGTERM, handle_sigterm)
-
-
-if __name__ == "__main__":
-    server = Server()
-    server.setup_insecure_server()
-    server.serve()

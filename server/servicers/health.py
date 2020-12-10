@@ -1,7 +1,7 @@
 from . import service_method
-from logger import module_logger
-from proto.health_pb2_grpc import HealthServicer as grpc_HealthServicer
-from proto.health_pb2 import HealthCheckResponse
+from server.core.logger import module_logger
+from server.proto.health_pb2_grpc import HealthServicer as grpc_HealthServicer
+from server.proto.health_pb2 import HealthCheckResponse
 
 
 class HealthServicer(grpc_HealthServicer):
