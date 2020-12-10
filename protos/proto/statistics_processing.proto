@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+option go_package = "https://github.com/jcalvesoliveira/statistics-processing/blob/grpc-api/protos/proto";
+
 package statisticsprocessing;
 
 service StatisticsProcesser {
