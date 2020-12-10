@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+service Health {
+  rpc HealthCheck(HealthCheckRequest) returns (HealthCheckResponse) {}
+}
+
+message HealthCheckRequest {
+}
+
+/* A response to the HealthCheckRequest. Contains both a status code
+ * and a status message */
+
+message HealthCheckResponse {
+  enum HealthStatus {
+    OK = 0;
+    UNKNOWN_HEALTH_STATUS = 1;
+  }
+  HealthStatus status_code = 1;
+  string status = 2;
+}
