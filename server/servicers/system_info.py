@@ -3,9 +3,9 @@ import time
 from socket import gethostname, gethostbyname
 
 from . import service_method
-from logger import module_logger
-from proto.system_info_pb2_grpc import SystemInfoServicer as grpc_SystemInfoServicer
-from proto.system_info_pb2 import SystemInfoResponse, ServerInfo, HostInfo
+from server.core.logger import module_logger
+from server.proto.system_info_pb2_grpc import SystemInfoServicer as grpc_SystemInfoServicer
+from server.proto.system_info_pb2 import SystemInfoResponse, ServerInfo, HostInfo
 
 
 class SystemInfoServicer(grpc_SystemInfoServicer):
