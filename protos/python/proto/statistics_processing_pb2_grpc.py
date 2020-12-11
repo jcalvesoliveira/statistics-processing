@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from proto import statistics_processing_pb2 as proto_dot_statistics__processing__pb2
+from server.proto import statistics_processing_pb2 as proto_dot_statistics__processing__pb2
 
 
 class StatisticsProcesserStub(object):
