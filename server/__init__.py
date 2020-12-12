@@ -1,1 +1,1 @@
-from server.serve import Server
+from server.server import Server

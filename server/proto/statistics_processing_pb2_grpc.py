@@ -7,7 +7,6 @@ from server.proto import statistics_processing_pb2 as proto_dot_statistics__proc
 
 class StatisticsProcesserStub(object):
     """Missing associated documentation comment in .proto file."""
-
     def __init__(self, channel):
         """Constructor.
 
@@ -15,15 +14,16 @@ class StatisticsProcesserStub(object):
             channel: A grpc.Channel.
         """
         self.ProcessDocument = channel.unary_unary(
-                '/statisticsprocessing.StatisticsProcesser/ProcessDocument',
-                request_serializer=proto_dot_statistics__processing__pb2.ProcessDocumentRequest.SerializeToString,
-                response_deserializer=proto_dot_statistics__processing__pb2.ProcessDocumentReply.FromString,
-                )
+            '/statisticsprocessing.StatisticsProcesser/ProcessDocument',
+            request_serializer=proto_dot_statistics__processing__pb2.
+            ProcessDocumentRequest.SerializeToString,
+            response_deserializer=proto_dot_statistics__processing__pb2.
+            ProcessDocumentReply.FromString,
+        )
 
 
 class StatisticsProcesserServicer(object):
     """Missing associated documentation comment in .proto file."""
-
     def ProcessDocument(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -33,34 +33,39 @@ class StatisticsProcesserServicer(object):
 
 def add_StatisticsProcesserServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'ProcessDocument': grpc.unary_unary_rpc_method_handler(
-                    servicer.ProcessDocument,
-                    request_deserializer=proto_dot_statistics__processing__pb2.ProcessDocumentRequest.FromString,
-                    response_serializer=proto_dot_statistics__processing__pb2.ProcessDocumentReply.SerializeToString,
-            ),
+        'ProcessDocument':
+        grpc.unary_unary_rpc_method_handler(
+            servicer.ProcessDocument,
+            request_deserializer=proto_dot_statistics__processing__pb2.
+            ProcessDocumentRequest.FromString,
+            response_serializer=proto_dot_statistics__processing__pb2.
+            ProcessDocumentReply.SerializeToString,
+        ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'statisticsprocessing.StatisticsProcesser', rpc_method_handlers)
-    server.add_generic_rpc_handlers((generic_handler,))
+        'statisticsprocessing.StatisticsProcesser', rpc_method_handlers)
+    server.add_generic_rpc_handlers((generic_handler, ))
 
 
- # This class is part of an EXPERIMENTAL API.
+# This class is part of an EXPERIMENTAL API.
 class StatisticsProcesser(object):
     """Missing associated documentation comment in .proto file."""
-
     @staticmethod
     def ProcessDocument(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/statisticsprocessing.StatisticsProcesser/ProcessDocument',
-            proto_dot_statistics__processing__pb2.ProcessDocumentRequest.SerializeToString,
-            proto_dot_statistics__processing__pb2.ProcessDocumentReply.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+                        target,
+                        options=(),
+                        channel_credentials=None,
+                        call_credentials=None,
+                        insecure=False,
+                        compression=None,
+                        wait_for_ready=None,
+                        timeout=None,
+                        metadata=None):
+        return grpc.experimental.unary_unary(
+            request, target,
+            '/statisticsprocessing.StatisticsProcesser/ProcessDocument',
+            proto_dot_statistics__processing__pb2.ProcessDocumentRequest.
+            SerializeToString, proto_dot_statistics__processing__pb2.
+            ProcessDocumentReply.FromString, options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout,
+            metadata)
