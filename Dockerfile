@@ -9,9 +9,8 @@ COPY ./requirements.txt /usr/src/app/requirements.txt
 
 RUN pip install -r requirements.txt
 
-COPY . /usr/src/app
-
-RUN python -m grpc_tools.protoc -I . --python_out=./server/proto --grpc_python_out=./server/proto protos/proto/statistics_processing.proto
+COPY ./main.py /usr/src/app/main.py
+COPY ./server /usr/src/app/server
 
 EXPOSE 50050
 

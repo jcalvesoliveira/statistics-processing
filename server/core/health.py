@@ -1,8 +1,8 @@
 import grpc
 import sys
 
-from proto import health_pb2_grpc
-from proto.health_pb2 import HealthCheckRequest, HealthCheckResponse
+from server.protos.proto import health_pb2_grpc
+from server.protos.proto.health_pb2 import HealthCheckRequest, HealthCheckResponse
 
 
 class HealthCheck(object):

@@ -7,12 +7,10 @@ from concurrent import futures
 import grpc
 
 from server.core.logger import module_logger
-from server.proto.health_pb2_grpc import add_HealthServicer_to_server
+from server.protos.proto.health_pb2_grpc import add_HealthServicer_to_server
 from server.servicers.health import HealthServicer
-from server.proto.system_info_pb2_grpc import add_SystemInfoServicer_to_server
-from server.servicers.system_info import SystemInfoServicer
 from server.servicers.statistics_calc import Calculator
-from server.proto.statistics_processing_pb2_grpc import add_StatisticsProcesserServicer_to_server
+from server.protos.proto.statistics_processing_pb2_grpc import add_StatisticsProcesserServicer_to_server
 
 GRPC_MAX_WORKERS = 10
 GRPC_INSECURE_PORT = 50050
@@ -36,7 +34,8 @@ class Server(object):
 
     def _server_options(self):
         server_options = (
-            ("grpc.keepalive_time_ms", 20000),  # send keepalive every x milliseconds
+            ("grpc.keepalive_time_ms",
+             20000),  # send keepalive every x milliseconds
             (
                 "grpc.keepalive_timeout_ms",
                 5000,
@@ -65,16 +64,13 @@ class Server(object):
         logger.info("Adding servicers")
         logger.debug("Adding HealthServicer")
         add_HealthServicer_to_server(HealthServicer(), self.server)
-        logger.debug("Adding SystemInfoServicer")
-        add_SystemInfoServicer_to_server(SystemInfoServicer(), self.server)
         logger.debug("Adding StatisticsServicer")
         add_StatisticsProcesserServicer_to_server(Calculator(), self.server)
 
     def setup_insecure_server(self):
         logger.info("Setting up an insecure server.")
         self.server.add_insecure_port(
-            "[::]:{insecure_port}".format(insecure_port=GRPC_INSECURE_PORT)
-        )
+            "[::]:{insecure_port}".format(insecure_port=GRPC_INSECURE_PORT))
         logger.info("Listening on [::]:%s (insecure)", GRPC_INSECURE_PORT)
 
     def serve(self):

@@ -5,8 +5,8 @@ from io import BytesIO
 import grpc
 
 from server.core.logger import module_logger
-from server.proto.statistics_processing_pb2_grpc import StatisticsProcesser
-from server.proto.statistics_processing_pb2 import ProcessDocumentReply
+from server.protos.proto.statistics_processing_pb2_grpc import StatisticsProcesser
+from server.protos.proto.statistics_processing_pb2 import ProcessDocumentReply
 
 default_config = toml.load('server/server.toml')['statistics']
 
