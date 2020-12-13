@@ -5,10 +5,10 @@ import time
 from concurrent import futures
 
 import grpc
+from grpc_health.v1 import health
+from grpc_health.v1 import health_pb2_grpc
 
 from server.core.logger import module_logger
-from server.protos.proto.health_pb2_grpc import add_HealthServicer_to_server
-from server.servicers.health import HealthServicer
 from server.servicers.statistics_calc import Calculator
 from server.protos.proto.statistics_processing_pb2_grpc import add_StatisticsProcesserServicer_to_server
 
@@ -63,7 +63,9 @@ class Server(object):
     def _add_servicers(self):
         logger.info("Adding servicers")
         logger.debug("Adding HealthServicer")
-        add_HealthServicer_to_server(HealthServicer(), self.server)
+        health_servicer = health.HealthServicer()
+        health_pb2_grpc.add_HealthServicer_to_server(health_servicer,
+                                                     self.server)
         logger.debug("Adding StatisticsServicer")
         add_StatisticsProcesserServicer_to_server(Calculator(), self.server)
 

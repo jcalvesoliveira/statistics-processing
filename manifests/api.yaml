@@ -35,7 +35,6 @@ spec:
         - name: statistics-processing
           image: gcr.io/visma-hiring/statistics-processing
           imagePullPolicy: Always
-          command: ["/app/service"]
           args: []
           ports:
             - containerPort: 50050
@@ -45,4 +44,24 @@ spec:
               cpu: 500m
             limits:
               memory: 768Mi
-              cpu: 2500m
+              cpu: 1000m
+          readinessProbe:
+            exec:
+              command:
+                [
+                  "/bin/grpc_health_probe",
+                  "-addr=:50050",
+                  "-connect-timeout=100ms",
+                  "-rpc-timeout=150ms",
+                ]
+            initialDelaySeconds: 5
+          livenessProbe:
+            exec:
+              command:
+                [
+                  "/bin/grpc_health_probe",
+                  "-addr=:50050",
+                  "-connect-timeout=100ms",
+                  "-rpc-timeout=150ms",
+                ]
+            initialDelaySeconds: 10
