@@ -7,6 +7,7 @@ from concurrent import futures
 import grpc
 from grpc_health.v1 import health
 from grpc_health.v1 import health_pb2_grpc
+from py_grpc_prometheus.prometheus_server_interceptor import PromServerInterceptor
 
 from server.core.logger import module_logger
 from server.servicers.statistics_calc import Calculator
@@ -28,7 +29,8 @@ class Server(object):
         logger.info("Creating server")
         logger.debug("ThreadPoolExecutor.max_workers = %s", GRPC_MAX_WORKERS)
         self.server = grpc.server(
-            futures.ThreadPoolExecutor(max_workers=GRPC_MAX_WORKERS))
+            futures.ThreadPoolExecutor(max_workers=GRPC_MAX_WORKERS),
+            interceptors=(PromServerInterceptor(), ))
 
     def _add_servicers(self):
         logger.info("Adding servicers")
