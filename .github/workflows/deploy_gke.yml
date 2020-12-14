@@ -22,7 +22,7 @@ on:
 env:
   PROJECT_ID: ${{ secrets.RUN_PROJECT }}
   GKE_CLUSTER: cluster-2
-  GKE_ZONE: us-central1-c
+  GKE_ZONE: us-central1-a
   IMAGE: statistics-processing
   DEPLOYMENT_NAME: statistics-processing
 
