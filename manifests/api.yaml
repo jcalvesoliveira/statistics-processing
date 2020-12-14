@@ -29,11 +29,15 @@ spec:
     metadata:
       labels:
         app: statistics-processing
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "5001"
+        prometheus.io/path: "/metrics"
     spec:
       terminationGracePeriodSeconds: 60
       containers:
         - name: statistics-processing
-          image: gcr.io/visma-hiring/statistics-processing:<CONTAINER_TAG>
+          image: gcr.io/visma-hiring/statistics-processing:latest
           imagePullPolicy: Always
           args: []
           ports:
