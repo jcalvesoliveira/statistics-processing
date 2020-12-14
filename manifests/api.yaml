@@ -37,7 +37,7 @@ spec:
       terminationGracePeriodSeconds: 60
       containers:
         - name: statistics-processing
-          image: gcr.io/visma-interview/statistics-processing
+          image: gcr.io/visma-interview/statistics-processing:<CONTAINER_TAG>
           imagePullPolicy: Always
           args: []
           ports:
