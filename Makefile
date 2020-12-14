@@ -10,5 +10,8 @@ build:
 run:
 	docker run --rm -p 50050:50050 statistics-processing
 
-help:
-	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST) | sort
+test:
+	python -m unittest
+
+generate-proto:
+	python -m grpc_tools.protoc -I . --python_out=./ --grpc_python_out=./ server/protos/proto/statistics_processing.proto

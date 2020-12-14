@@ -1,4 +1,3 @@
-import math
 import toml
 import numpy as np
 from io import BytesIO
@@ -30,18 +29,18 @@ class Calculator(StatisticsProcesser):
                     process_config[param] = default_config[param]
                     pass
 
-            document = np.genfromtxt(BytesIO(request.content),
-                                     dtype=str,
-                                     delimiter=process_config['delimiter'])
+            document = np.genfromtxt(
+                BytesIO(request.content),
+                dtype=str,
+                delimiter=process_config['input_delimiter'])
             header = list(document[0])
             document = np.delete(document, (0), axis=0)
 
             agg_cols_idx = []
+            cols_to_exclude = [process_config['key_column']]
             try:
                 key_column_idx = header.index(process_config['key_column'])
-                cols_to_exclude = process_config['cols_exclude'] + [
-                    process_config['key_column']
-                ]
+                cols_to_exclude.extend(process_config['cols_exclude'])
                 agg_cols_idx += [
                     header.index(col) for col in header
                     if col not in cols_to_exclude

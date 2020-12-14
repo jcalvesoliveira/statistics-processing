@@ -10,15 +10,11 @@ service StatisticsProcesser {
 
 message ProcessDocumentRequest {
   bytes content = 1;
-  repeated Column cols_exclude = 2;
+  repeated string cols_exclude = 2;
   float max_unique_perc = 3;
-  string delimiter = 4;
+  string input_delimiter = 4;
   string summary_header = 5;
   string key_column = 6; 
-}
-
-message Column {
-  string name = 1;
 }
 
 message ProcessDocumentReply {
