@@ -1,4 +1,4 @@
-name: Python package
+name: Python test
 
 on: [push]
 
@@ -16,7 +16,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
-          python pip install -r requirements.txt; fi
+          python pip install -r requirements.txt
       - name: Test with unittest
         run: |
           python -m unittest
