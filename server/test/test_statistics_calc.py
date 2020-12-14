@@ -43,6 +43,19 @@ class TestStatisticsProcessing(unittest.TestCase):
         self.assertEqual(response.summary, self.result)
         self.assertEqual(code, grpc.StatusCode.OK)
 
+    def test_statistics_calc_document_many_cols(self):
+        """ Expect to get the agreggation of only the fisrt 25 columns """
+        with open('server/test/test_many_cols.csv', 'r') as file:
+            document = file.read().encode()
+        with open('server/test/result_many_cols.csv', 'r') as file:
+            result = file.read().encode()
+        request = ProcessDocumentRequest(content=document)
+        process_document_method = self.process_document_method(request)
+        response, mtdata, code, dtls = process_document_method.termination()
+        open('result_many_cols.csv', 'wb').write(response.summary)
+        self.assertEqual(response.summary, result)
+        self.assertEqual(code, grpc.StatusCode.OK)
+
     def test_statistics_calc_delimiter(self):
         """ Expect to get same result after processing document as result.csv
             but using  '|' as delimiter.
@@ -94,7 +107,7 @@ class TestStatisticsProcessing(unittest.TestCase):
         self.assertEqual(code, grpc.StatusCode.OK)
 
     def test_statistics_calc_header(self):
-        """ Expect to get same result after processing document as result.csv """
+        """ Expect to get same result after processing document as result.csv but with custom header"""
         new_header = 'Test\n'
         request = ProcessDocumentRequest(content=self.document,
                                          summary_header=new_header)
