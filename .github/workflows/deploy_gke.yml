@@ -32,15 +32,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # This step will retry until required check passes
-      # and will fail the whole workflow if the check conclusion is not a success
-      - name: Wait on tests
-        uses: lewagon/wait-on-check-action@master
-        with:
-          ref: master
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          wait-interval: 20 # second
-
       - name: Checkout
         uses: actions/checkout@v2
 
