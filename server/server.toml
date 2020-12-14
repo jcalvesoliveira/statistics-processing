@@ -1,0 +1,7 @@
+[statistics]
+cols_exclude = [] # If the request contains columns to be excluded this parameter will be overrided     
+input_delimiter = ',' # Delimiter to split the document rows
+key_column = "CompanyId" # Column used as key in agregation
+max_agg_cols = 25 # Determine the maximum number of columns to agreggate by (not available in the API)
+max_unique_perc = 0.6 # Maximum percentage of unique values alloweed in a column over the document. 
+summary_header = ",CompanyId,ColumnName,ColumnValue,Count\n" # Header of the report returned
