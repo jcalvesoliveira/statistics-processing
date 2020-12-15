@@ -11,6 +11,7 @@ default_config = toml.load('server/server.toml')['statistics']
 
 
 class Calculator(StatisticsProcesser):
+    ''''Calculate statistcs metrics from a bytes document'''
     def __init__(self) -> None:
         self.logger = module_logger(__name__)
 
@@ -19,6 +20,8 @@ class Calculator(StatisticsProcesser):
         process_config = {}
         results = ''
         try:
+            # if any optional parameter is present in the request
+            # overrides the default configuration
             for param in default_config:
                 try:
                     req_param = getattr(request, param)
@@ -29,6 +32,7 @@ class Calculator(StatisticsProcesser):
                     process_config[param] = default_config[param]
                     pass
 
+            # convert the bytes document into a numpy array
             document = np.genfromtxt(
                 BytesIO(request.content),
                 dtype=str,
@@ -36,6 +40,8 @@ class Calculator(StatisticsProcesser):
             header = list(document[0])
             document = np.delete(document, (0), axis=0)
 
+            # if any cols listed on cols_exclude are invalid
+            # finish the process with code 'INVALID_ARGUMENT'
             agg_cols_idx = []
             cols_to_exclude = [process_config['key_column']]
             try:
@@ -50,6 +56,7 @@ class Calculator(StatisticsProcesser):
                 context.set_code(grpc.StatusCode.INVALID_ARGUMENT)
                 context.set_details(str(error))
                 return ProcessDocumentReply()
+
             if len(agg_cols_idx) > process_config['max_agg_cols']:
                 msg = ("Number os columns to aggregate exceed!!"
                        f" Resizing from {len(agg_cols_idx)} to the first"
@@ -58,6 +65,7 @@ class Calculator(StatisticsProcesser):
                 context.set_details(msg)
                 agg_cols_idx = agg_cols_idx[0:process_config['max_agg_cols']]
 
+            # agreggation using numpy
             results += process_config['summary_header']
             line_idx = 0
             for idx in agg_cols_idx:
