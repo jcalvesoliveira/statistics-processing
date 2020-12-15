@@ -1,6 +1,6 @@
 
 
-# Statistics Processing
+# Statistics Processing [![](https://img.shields.io/badge/python-3.6+-blue.svg)](https://www.python.org/downloads/)
 A gRPC service to calculate summary statistics from financial transactions.
 
 This service is running in a GKE instance on Google Cloud Platform and can be accessed at `35.239.102.102:50050`
